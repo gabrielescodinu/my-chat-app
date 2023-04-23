@@ -25,14 +25,14 @@ function UserSearch() {
   };
 
   return (
-    <div className="user-search p-8 bg-blue-500">
+    <div className="user-search p-4 bg-blue-500 text-sm">
       <form onSubmit={handleSearch}>
-        <input className='p-4 rounded-xl outline-none mr-8' type="text" placeholder="Search users by email" value={searchTerm} onChange={handleSearchTermChange} />
-        <button className='bg-blue-200 hover:bg-blue-400 p-4 rounded-xl' type="submit">Search</button>
+        <input className='p-2 rounded-xl outline-none mr-4' type="text" placeholder="Search users by email" value={searchTerm} onChange={handleSearchTermChange} />
+        <button className='bg-blue-200 hover:bg-blue-400 p-2 rounded-xl' type="submit">Search</button>
       </form>
-      <ul className='mt-8 bg-white rounded-xl p-4'>
+      <ul className='rounded-xl'>
         {users.map((user) => (
-          <li className='border-b p-4' key={user.id}>{user.email}</li>
+          <li className='border-b p-2' key={user.id}>{user.email}</li>
         ))}
       </ul>
     </div>

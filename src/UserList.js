@@ -30,9 +30,11 @@ function UserList({ onUserSelect }) {
     <div className="user-list">
       <ul>
         {users.map((user) => (
-          <li key={user.id} onClick={() => handleUserSelect(user)}>
-            {user.email}
-            {user.uid}
+          <li className='p-4 bg-blue-800 text-white shadow-xl flex items-center' key={user.id} onClick={() => handleUserSelect(user)}>
+            <div className='bg-white rounded-full h-8 w-8 mr-4 shadow-xl'></div>
+            <p>
+              {user.email}
+            </p>
           </li>
         ))}
       </ul>

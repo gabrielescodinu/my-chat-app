@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       {user ? (
         <>
-          <div className='bg-blue-700 p-8 text-white'>
+          <div className='bg-blue-700 shadow-xl p-8 text-white'>
             <h1>Welcome {user.email}</h1>
           </div>
           <Chat />
