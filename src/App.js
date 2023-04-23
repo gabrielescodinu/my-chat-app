@@ -27,9 +27,11 @@ function App() {
     <div className="App">
       {user ? (
         <>
-        <h1>Welcome {user.email}</h1>
-        <Chat />
-      </>
+          <div className='bg-blue-700 p-8 text-white'>
+            <h1>Welcome {user.email}</h1>
+          </div>
+          <Chat />
+        </>
       ) : (
         <Auth />
       )}

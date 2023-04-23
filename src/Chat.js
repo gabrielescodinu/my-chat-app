@@ -39,19 +39,24 @@ function Chat() {
     };
 
     return (
-        <div className="chat">
-            <div className="user-search-container">
-                <UserList />
+        <div className='flex'>
+            <div className='bg-blue-900 overflow-scroll h-screen w-1/3'>
+                <div className="user-search-container">
+                    <UserList />
+                </div>
             </div>
-            <div className="message-list">
-                {messages.map((message) => (
-                    <Message key={message.id} message={message} />
-                ))}
+            <div className="chat bg-blue-800 overflow-scroll h-screen w-2/3">
+
+                <div className="message-list">
+                    {messages.map((message) => (
+                        <Message key={message.id} message={message} />
+                    ))}
+                </div>
+                <form onSubmit={handleSubmit} className="message-form p-8 bg-blue-500 absolute bottom-0 w-full">
+                    <input className='p-4 rounded-xl outline-none mr-8' placeholder="Send a message" type="text" value={newMessage} onChange={handleNewMessage} />
+                    <button className='bg-blue-200 hover:bg-blue-400 p-4 rounded-xl' type="submit">Send</button>
+                </form>
             </div>
-            <form onSubmit={handleSubmit} className="message-form">
-                <input type="text" value={newMessage} onChange={handleNewMessage} />
-                <button type="submit">Send</button>
-            </form>
         </div>
     );
 }
