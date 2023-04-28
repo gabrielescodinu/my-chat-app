@@ -8,28 +8,31 @@ import UserSearch from './UserSearch';
 function Chat() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    // const [chatUserId, setChatUserId] = useState('');
+    const [chatUserId, setChatUserId] = useState('');
 
     useEffect(() => {
-        const messagesRef = firebase.database().ref('messages');
-        messagesRef.on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                const messageArray = Object.values(data);
-                setMessages(messageArray);
-            }
-        });
-        return () => {
-            messagesRef.off('value');
-        };
-    }, []);
+        if (chatUserId) {
+            const currentUser = firebase.auth().currentUser;
+            const chatRef = firebase.database().ref(`messages/${currentUser.uid}_${chatUserId}`);
+            chatRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const messageArray = Object.values(data);
+                    setMessages(messageArray);
+                }
+            });
+            return () => {
+                chatRef.off('value');
+            };
+        }
+    }, [chatUserId]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (newMessage.trim()) {
-            const messagesRef = firebase.database().ref('messages');
+        if (newMessage.trim() && chatUserId) {
             const currentUser = firebase.auth().currentUser;
-            messagesRef.push({ text: newMessage, sender: currentUser.email });
+            const chatRef = firebase.database().ref(`messages/${currentUser.uid}_${chatUserId}`);
+            chatRef.push({ text: newMessage, sender: currentUser.email });
             setNewMessage('');
         }
     };
@@ -39,12 +42,19 @@ function Chat() {
         setNewMessage(event.target.value);
     };
 
+    const handleSelectUser = (userId) => {
+        const currentUser = firebase.auth().currentUser;
+        const chatUserId = [currentUser.uid, userId].sort().join('_');
+        setChatUserId(chatUserId);
+        setMessages([]);
+      };
+
     return (
         <div className='flex'>
             <div className='bg-blue-900 overflow-scroll h-screen w-1/3'>
                 <div className="user-search-container">
                     <UserSearch />
-                    <UserList />
+                    <UserList onSelectUser={handleSelectUser} />
                 </div>
             </div>
             <div className="chat bg-blue-800 overflow-scroll h-screen w-2/3 shadow-xl">

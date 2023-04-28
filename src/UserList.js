@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/database';
-
-function UserList({ onUserSelect }) {
+function UserList({ onSelectUser }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function UserList({ onUserSelect }) {
   }, []);
 
   const handleUserSelect = (user) => {
-    onUserSelect(user);
+    onSelectUser(user.id);
   };
 
   return (
